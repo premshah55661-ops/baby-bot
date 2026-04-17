@@ -5,8 +5,9 @@ const config = require('./config.json');
 (async () => {
   const context = await chromium.launchPersistentContext('./bot-profile', {
     headless: false,
-    channel: 'chrome'
-  });
+    const browser = await chromium.launch({
+ headless: true
+});
 
   const page = context.pages()[0] || await context.newPage();
 
