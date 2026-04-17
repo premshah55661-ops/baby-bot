@@ -4,10 +4,8 @@ const config = require('./config.json');
 
 (async () => {
   const context = await chromium.launchPersistentContext('./bot-profile', {
-    headless: false,
-    const browser = await chromium.launch({
- headless: true
-});
+    headless: true
+  });
 
   const page = context.pages()[0] || await context.newPage();
 
@@ -110,7 +108,7 @@ const config = require('./config.json');
         }
       }
 
-      // same user message skip
+      // same message skip
       if (latest === lastUserMessage) {
         busy = false;
         return;
@@ -208,6 +206,10 @@ const config = require('./config.json');
 
       else if (latest.includes("কোথায়")) {
         await sendMessage("আপনাদের মাঝেই আছি 😍");
+      }
+
+      else {
+        await sendMessage("জি বলুন 😊");
       }
 
     } catch (error) {
