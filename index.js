@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 const cron = require('node-cron');
-const config = require('./config.json')
+const config = require('./config.json');
 
 (async () => {
   const context = await chromium.launchPersistentContext('./bot-profile', {
