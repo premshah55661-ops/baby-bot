@@ -1,10 +1,17 @@
+```js
 const { chromium } = require('playwright');
 const cron = require('node-cron');
 const config = require('./config.json');
 
 (async () => {
   const context = await chromium.launchPersistentContext('./bot-profile', {
-    headless: true
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu'
+    ]
   });
 
   const page = context.pages()[0] || await context.newPage();
@@ -79,7 +86,6 @@ const config = require('./config.json');
         return;
       }
 
-      // নিজের bot message ignore
       const botTexts = [
         "hello 👋",
         "hi 👋",
@@ -108,7 +114,6 @@ const config = require('./config.json');
         }
       }
 
-      // same message skip
       if (latest === lastUserMessage) {
         busy = false;
         return;
@@ -117,10 +122,6 @@ const config = require('./config.json');
       lastUserMessage = latest;
 
       console.log("New Message:", latest);
-
-      // ===============================
-      // REPLY LOGIC
-      // ===============================
 
       if (latest.includes("hi")) {
         await sendMessage("hello 👋");
@@ -221,3 +222,4 @@ const config = require('./config.json');
   }, 5000);
 
 })();
+```
